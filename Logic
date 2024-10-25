@@ -1,0 +1,85 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
+
+public class test {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to the To-Do List App!");
+        while (true) {
+            String choice = "";
+            Boolean validInput = false;
+
+            while(!validInput){
+                try{
+                    System.out.println("What would you like to do? (Add, Delete, Show)");
+                    choice = scanner.nextLine().toLowerCase();
+
+                    if (!choice.equals("add") && !choice.equals("delete") && !choice.equals("show")){
+                        throw new IllegalArgumentException("Invalid choice. Please choose Add, Delete, or Show.");
+                    }
+                    validInput = true;
+                } catch (IllegalArgumentException e){
+                    System.out.println(e.getMessage());
+                }
+            }
+            
+
+            if (choice.equals("add")){
+                addTask(list, scanner);
+            } else if (choice.equals("delete")){
+                if (list.size() == 0){
+                    System.out.println("List is empty.");
+                } else {
+                    deleteTask(list, scanner);
+                }
+            } else if(choice.equals("show")){
+                if (list.size() == 0){
+                    System.out.println("List is empty.");
+                } else {
+                    showList(list);
+                }
+            }
+            System.out.println("Would you like to do something else? (y/n)");
+            String continu = scanner.nextLine();
+            if (continu.equals("n")){
+                break;
+            }
+        }
+        scanner.close();
+        System.out.println("Thank you for using the App!");
+        
+    }
+
+
+    public static void addTask(ArrayList<String> list, Scanner scanner){
+        
+        System.out.println("What is the task?");
+        String task = scanner.nextLine();
+        list.add(task);
+        System.out.println("Task successfully added!");
+        
+        
+    }
+
+
+    public static void deleteTask(ArrayList<String> list, Scanner scanner){
+        for (int i = 0; i < list.size(); i++){
+            System.out.println((i + 1) + ". " + list.get(i));
+        }
+        
+        System.out.println("Which task would you like to delete?");
+        int task = scanner.nextInt() - 1;
+        scanner.nextLine();
+        list.remove(task);
+        System.out.println("Task successfully Deleted!");
+
+    }
+
+    public static void showList(ArrayList<String> list){
+        for (int i = 0; i < list.size(); i++){
+            System.out.println((i+1) + ". " + list.get(i));
+        }
+    }
+}
